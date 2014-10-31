@@ -56,3 +56,22 @@ Line 1
 	Then the result is :
 	| Line | Type | Value  |
 	| 2    | Del  | Line 2 |
+
+Scenario: Compare file with del line into others
+	Given I have the first file:
+	"""
+Line 1
+Line 2
+Line 3
+Line 4
+	"""
+	And I have the seconde file :
+	"""
+Line 1
+Line 3
+Line 4
+	"""
+	When I press compare
+	Then the result is :
+	| Line | Type | Value  |
+	| 2    | Del  | Line 2 |

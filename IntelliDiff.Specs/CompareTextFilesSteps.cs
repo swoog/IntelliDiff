@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
 
     using TechTalk.SpecFlow;
     using TechTalk.SpecFlow.Assist;
@@ -23,21 +24,21 @@
         {
             this.firstFile = textfile;
         }
-        
+
         [Given(@"I have the seconde file :")]
         public void GivenIHaveTheSecondeFile(string textfile)
         {
             this.secondFile = textfile;
         }
-        
+
         [When(@"I press compare")]
         public void WhenIPressCompare()
         {
             var textFileComparer = new TextFileComparer();
 
-           this.result = textFileComparer.Compare(this.firstFile, this.secondFile);
+            this.result = textFileComparer.Compare(this.firstFile, this.secondFile);
         }
-        
+
         [Then(@"the result is equal")]
         public void ThenTheResultIsEqual()
         {
@@ -53,9 +54,9 @@
         [Then(@"the result is :")]
         public void ThenTheResultIs(Table table)
         {
-            var diffs = this.ConvertToDiff(table);
+            var diffs = new DiffList(this.ConvertToDiff(table));
 
-            Assert.Equal(diffs, this.result, new DiffComparer());
+            Assert.Equal(diffs, new DiffList(this.result), new DiffComparer());
         }
 
         private IList<Diff> ConvertToDiff(Table table)
@@ -74,24 +75,25 @@
         }
     }
 
-    internal class EnumHelper
+    internal class DiffList
     {
-        public static T Parse<T>(string value)
-        {
-            return (T)Enum.Parse(typeof(T), value);
-        }
-    }
+        private readonly IList<Diff> convertToDiff;
 
-    public class DiffComparer : IEqualityComparer<Diff>
-    {
-        public bool Equals(Diff x, Diff y)
+        public DiffList(IList<Diff> convertToDiff)
         {
-            return x.Line == y.Line && x.Type == y.Type && x.Value == y.Value;
+            this.convertToDiff = convertToDiff;
         }
 
-        public int GetHashCode(Diff obj)
+        public override string ToString()
         {
-            throw new System.NotImplementedException();
+            var sb = new StringBuilder();
+
+            foreach (var item in convertToDiff)
+            {
+                sb.AppendLine(string.Format("| {0} | {1} | {2} |", item.Line, item.Type, item.Value));
+            }
+
+            return sb.ToString();
         }
     }
 }

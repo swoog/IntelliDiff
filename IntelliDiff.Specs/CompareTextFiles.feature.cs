@@ -178,6 +178,37 @@ this.ScenarioSetup(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Compare Text Files")]
+        [Xunit.TraitAttribute("Description", "Compare file with del line into others")]
+        public virtual void CompareFileWithDelLineIntoOthers()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Compare file with del line into others", ((string[])(null)));
+#line 60
+this.ScenarioSetup(scenarioInfo);
+#line hidden
+#line 61
+ testRunner.Given("I have the first file:", "Line 1\r\nLine 2\r\nLine 3\r\nLine 4", ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 68
+ testRunner.And("I have the seconde file :", "Line 1\r\nLine 3\r\nLine 4", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 74
+ testRunner.When("I press compare", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Line",
+                        "Type",
+                        "Value"});
+            table3.AddRow(new string[] {
+                        "2",
+                        "Del",
+                        "Line 2"});
+#line 75
+ testRunner.Then("the result is :", ((string)(null)), table3, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

@@ -54,6 +54,8 @@
       <DependentUpon>CompareTextFiles.feature</DependentUpon>
     </Compile>
     <Compile Include="CompareTextFilesSteps.cs" />
+    <Compile Include="DiffComparer.cs" />
+    <Compile Include="EnumHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
